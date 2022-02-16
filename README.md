@@ -9,6 +9,7 @@
 - padronize a API com o padrão Restful (https://www.hostgator.com.br/blog/api-restful/) (https://laravel.com/docs/8.x/controllers#api-resource-routes)
 - validações de requisições são muito importantes, utilize o form validation do laravel (https://laravel.com/docs/8.x/validation#creating-form-requests)
 - a padronização das responses é de extrema importancias para a qualidade de um projeto, utilize API Resource do laravel (https://laravel.com/docs/8.x/eloquent-resources)
+- utilize o software POSTMAN para testar as suas requisições e exporte a collection para dentro do projeto quando finalizar o desenvolvimento (https://www.postman.com/). Recomendo utilizar a versão de desktop do software.
 
 ### IDEIA DA API & FUNCIONALIDADES
 #### A ideia dessa API é que cada usuário consiga cadastrar suas Galaxias, sistemas solares e planetas favoritos. Sua missão como desenvolvedor é garatir que ele consigo cadastrar, visualizar, filtrar, alterar, deletar e todas as informações que ele deseja. Lembre que todas as rotas dos CRUD devem ser autenticadas, lembre também de utilizar o usuário logado para salvar as informações com o ID dele ``Auth::user()->id``.
