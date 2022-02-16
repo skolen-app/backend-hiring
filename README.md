@@ -55,3 +55,9 @@
    "light_years_from_the_main_star": 123123123312
 }
  ```
+
+## PULL REQUEST
+- Depois que finalizar a sua API Restful, crie uma pull-request para esse repositório
+- Lembre de criar um nome para sua branch que descreve o que será/foi desenvolvido nela
+- Lembre de realizar commits pertinentes, exemplo ruim "salvando código", exemplo bom "implementadas funcionalidades de criação, leitura, atualização e exclusão de galaxias"
+- Lembre de criar uma descrição para quem está fazendo o code-review consiga testar todas as funcionalidades implementadas
