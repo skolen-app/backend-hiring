@@ -4,7 +4,7 @@
 ## REQUISITOS 
 ### Ferramentas e padronizações
 
-- Utilize o framework Laravel na versãon 8 (https://laravel.com/docs/8.x/releases)
+- utilize o framework Laravel na versãon 8 (https://laravel.com/docs/8.x/releases)
 - banco de dados postgres (https://www.postgresql.org/)
 - padronize a API com o padrão Restful (https://www.hostgator.com.br/blog/api-restful/) (https://laravel.com/docs/8.x/controllers#api-resource-routes)
 - validações de requisições são muito importantes, utilize o form validation do laravel (https://laravel.com/docs/8.x/validation#creating-form-requests)
@@ -58,7 +58,7 @@
  ```
 
 ## PULL REQUEST
-- Depois que finalizar a sua API Restful, crie uma pull-request para esse repositório
-- Lembre de criar um nome para sua branch que descreve o que será/foi desenvolvido nela
-- Lembre de realizar commits pertinentes, exemplo ruim "salvando código", exemplo bom "implementadas funcionalidades de criação, leitura, atualização e exclusão de galaxias"
-- Lembre de criar uma descrição para quem está fazendo o code-review consiga testar todas as funcionalidades implementadas
+- depois que finalizar a sua API Restful, crie uma pull-request para esse repositório
+- lembre de criar um nome para sua branch que descreve o que será/foi desenvolvido nela
+- lembre de realizar commits pertinentes, exemplo ruim "salvando código", exemplo bom "implementadas funcionalidades de criação, leitura, atualização e exclusão de galaxias"
+- lembre de criar uma descrição para quem está fazendo o code-review consiga testar todas as funcionalidades implementadas
