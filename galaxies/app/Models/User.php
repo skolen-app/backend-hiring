@@ -41,4 +41,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get the galaxies for the user.
+     */
+    public function galaxies() {
+        return $this->hasMany(Galaxy::class);
+    }
 }
