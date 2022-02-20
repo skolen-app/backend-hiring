@@ -12,6 +12,20 @@ class Planet extends Model
     use SoftDeletes;
 
     /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'planets';
+
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = true;
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
