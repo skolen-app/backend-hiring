@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreSolarSystemRequest;
 use App\Http\Resources\SolarSystemResource;
 use App\Models\SolarSystem;
 use Illuminate\Http\Request;
@@ -34,7 +35,7 @@ class SolarSystemController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return SolarSystemResource
      */
-    public function store(Request $request)
+    public function store(StoreSolarSystemRequest $request)
     {
         $solarSystem = SolarSystem::create([
             "galaxy_id" => $request->input('galaxy_id'),
@@ -75,7 +76,7 @@ class SolarSystemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreSolarSystemRequest $request, $id)
     {
         $solarSystem = SolarSystem::findOrFail($request->id);
 

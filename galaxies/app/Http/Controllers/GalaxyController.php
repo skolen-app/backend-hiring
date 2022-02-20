@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreGalaxyRequest;
 use App\Http\Resources\GalaxyResource;
 use App\Models\Galaxy;
 use Illuminate\Http\Request;
@@ -35,7 +36,7 @@ class GalaxyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return GalaxyResource
      */
-    public function store(Request $request)
+    public function store(StoreGalaxyRequest $request)
     {
         $galaxy = Galaxy::create([
             "user_id" => Auth::id(),
@@ -75,7 +76,7 @@ class GalaxyController extends Controller
      * @param  int  $id
      * @return GalaxyResource
      */
-    public function update(Request $request, $id)
+    public function update(StoreGalaxyRequest $request, $id)
     {
         $galaxy = Galaxy::findOrFail($request->id);
 

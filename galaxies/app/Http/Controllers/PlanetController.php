@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePlanetRequest;
 use App\Http\Resources\PlanetResource;
 use App\Models\Planet;
 use Illuminate\Http\Request;
@@ -34,7 +35,7 @@ class PlanetController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return PlanetResource
      */
-    public function store(Request $request)
+    public function store(StorePlanetRequest $request)
     {
         $planet = Planet::create([
             "solar_system_id" => $request->input('solar_system_id'),
@@ -76,7 +77,7 @@ class PlanetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StorePlanetRequest $request, $id)
     {
         $planet = Planet::findOrFail($request->id);
 
