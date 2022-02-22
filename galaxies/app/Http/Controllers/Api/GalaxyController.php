@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreGalaxyRequest;
 use App\Http\Resources\GalaxyResource;
 use App\Models\Galaxy;
@@ -21,30 +22,21 @@ class GalaxyController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return GalaxyResource
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(StoreGalaxyRequest $request)
     {
         $galaxy = Galaxy::create([
-            "user_id" => Auth::id(),
+            "user_id" => $request->input('user_id'),
             "name" => $request->input('name'),
             "dimension" => $request->input('dimension'),
             "number_of_solar_systems" => $request->input('number_of_solar_systems')
         ]);
-        return new GalaxyResource($galaxy);
+        //return $this->response(, new GalaxyResource($galaxy));
+        return response('Galáxia criada com sucesso!')->json($galaxy);
     }
 
     /**
@@ -56,17 +48,6 @@ class GalaxyController extends Controller
     public function show($id)
     {
         return new GalaxyResource(Galaxy::FindOrFail($id));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**

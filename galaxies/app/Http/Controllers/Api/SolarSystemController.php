@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreSolarSystemRequest;
 use App\Http\Resources\SolarSystemResource;
 use App\Models\SolarSystem;
@@ -20,16 +21,6 @@ class SolarSystemController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -44,7 +35,7 @@ class SolarSystemController extends Controller
             "number_of_planets" => $request->input('number_of_planets'),
             "main_star" => $request->input('main_star')
         ]);
-        return new SolarSystemResource($solarSystem);
+        return $this->response('Sistema Solar criado com sucesso!', new SolarSystemResource($solarSystem));
     }
 
     /**
@@ -56,17 +47,6 @@ class SolarSystemController extends Controller
     public function show($id)
     {
         return new SolarSystemResource(SolarSystem::FindOrFail($id));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**

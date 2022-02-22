@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePlanetRequest;
 use App\Http\Resources\PlanetResource;
 use App\Models\Planet;
@@ -20,20 +21,10 @@ class PlanetController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return PlanetResource
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(StorePlanetRequest $request)
     {
@@ -45,7 +36,8 @@ class PlanetController extends Controller
             "light_years_from_the_main_star" => $request->input('light_years_from_the_main_star')
         ]);
 
-        return new PlanetResource($planet);
+        //return $this->response('', new PlanetResource($planet));
+        return response('Planeta criado com sucesso!')->json($planet);
     }
 
     /**
@@ -57,17 +49,6 @@ class PlanetController extends Controller
     public function show($id)
     {
         return new PlanetResource(Planet::FindOrFail($id));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**

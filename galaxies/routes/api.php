@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -7,9 +9,10 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Resources\UserResource;
 use App\Models\User;
-use App\Http\Controllers\GalaxyController;
-use App\Http\Controllers\SolarSystemController;
-use App\Http\Controllers\PlanetController;
+use App\Http\Controllers\Api\GalaxyController;
+use App\Http\Controllers\Api\SolarSystemController;
+use App\Http\Controllers\Api\PlanetController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -21,16 +24,19 @@ use App\Http\Controllers\PlanetController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::post('user-create', [RegisteredUserController::class, 'store']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
 
-//Route::middleware('auth')->group(function () {
-    Route::get('/user/{id}', function ($id) {
-        return new UserResource(User::findOrFail($id));
-    });
+//Route::get('users', 'Api\\UserController@index');
+//Route::post('auth/login', 'Api\\AuthController@login');
+Route::post('auth/login', [AuthController::class, 'login']);
+
+Route::group(['middleware' => ['apiJwt']], function () {
+    Route::post('auth/logout', [AuthController::class, 'logout']);
+
+    Route::get('users', [UserController::class, 'index']);
 
     // Create new galaxy
     Route::post('galaxy', [GalaxyController::class, 'store']);
@@ -78,5 +84,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
     // Delete planet
     Route::delete('planet/{id}', [PlanetController::class, 'destroy']);
-//});
+});
+
+
+   /* Route::get('/user/{id}', function ($id) {
+        return new UserResource(User::findOrFail($id));
+    });
+   */
+
 
