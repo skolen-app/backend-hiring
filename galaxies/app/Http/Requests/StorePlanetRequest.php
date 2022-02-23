@@ -25,9 +25,9 @@ class StorePlanetRequest extends FormRequest
     {
         return [
             'name' => 'required|max:100',
-            'dimension' => 'required|regex:/^[0-9]+$/i',
-            'number_of_moons' => 'required|regex:/^[0-9]+$/i',
-            'light_years_from_the_main_star' => 'required|regex:/^[0-9]+$/i'
+            'dimension' => 'required|regex:/^[-]?[0-9]+$/i',
+            'number_of_moons' => 'required|regex:/^[-]?[0-9]+$/i',
+            'light_years_from_the_main_star' => 'required|regex:/^[-]?[0-9]+$/i'
         ];
     }
 

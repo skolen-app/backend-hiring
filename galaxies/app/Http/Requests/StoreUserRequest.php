@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreSolarSystemRequest extends FormRequest
+class StoreUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,9 @@ class StoreSolarSystemRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:100',
-            'dimension' => 'required|regex:/^[-]?[0-9]+$/i',
-            'number_of_planets' => 'required|regex:/^[-]?[0-9]+$/i',
-            'main_star' => 'required|max:100'
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'confirmed', 'min:8'],
         ];
     }
 
@@ -40,11 +39,11 @@ class StoreSolarSystemRequest extends FormRequest
     {
         return [
             'name.required' => 'O campo nome é obrigatório.',
-            'dimension.required' => 'O campo dimensão é obrigatório.',
-            'dimension.regex' => 'O campo dimensão é inválido.',
-            'number_of_planets.required' => 'O campo número de planetas é obrigatório.',
-            'number_of_planets.regex' => 'O campo número de planetas é inválido.',
-            'main_star.required' => 'O campo estrela principal é obrigatório.',
+            'email.required' => 'O campo email é obrigatório.',
+            'email.email' => 'O campo email é inválido.',
+            'password.min' => 'A senha deve ter no mínimo 8 caracteres.',
+            'password.required' => 'O campo senha é obrigatório.',
+            'password.confirmed' => 'A confirmação de senha não corresponde.'
         ];
     }
 }

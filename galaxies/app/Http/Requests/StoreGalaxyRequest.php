@@ -25,8 +25,8 @@ class StoreGalaxyRequest extends FormRequest
     {
         return [
             'name' => 'required|max:100',
-            'dimension' => 'required|regex:/^[0-9]+$/i',
-            'number_of_solar_systems' => 'required|regex:/^[0-9]+$/i',
+            'dimension' => 'required|regex:/^[-]?[0-9]+$/i',
+            'number_of_solar_systems' => 'required|regex:/^[-]?[0-9]+$/i',
         ];
     }
 

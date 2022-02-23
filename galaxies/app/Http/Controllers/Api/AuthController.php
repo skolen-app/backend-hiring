@@ -29,6 +29,8 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->only(['email', 'password']);
+        //$user = User::where('email', '==', $request->input('email'))->findOrFail();
+        //\Illuminate\Support\Facades\Auth::login($user);
 
         if (!$token = auth('api')->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
@@ -47,6 +49,16 @@ class AuthController extends Controller
         auth('api')->logout();
 
         return response()->json(['message' => 'Successfully logged out']);
+    }
+
+    /**
+     * Get the authenticated User.
+     *
+     * @return \Illuminate\Contracts\Auth\Authenticatable
+     */
+    public function me()
+    {
+        return auth()->user();
     }
 
     /**

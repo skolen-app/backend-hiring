@@ -2,41 +2,21 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
-use App\Http\Controllers\Auth\RegisteredUserController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Resources\UserResource;
-use App\Models\User;
 use App\Http\Controllers\Api\GalaxyController;
 use App\Http\Controllers\Api\SolarSystemController;
 use App\Http\Controllers\Api\PlanetController;
 
+// Register user
+Route::post('register', [UserController::class, 'store']);
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
-
-//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
-
-//Route::get('users', 'Api\\UserController@index');
-//Route::post('auth/login', 'Api\\AuthController@login');
+// Login
 Route::post('auth/login', [AuthController::class, 'login']);
 
 Route::group(['middleware' => ['apiJwt']], function () {
+    // Logout
     Route::post('auth/logout', [AuthController::class, 'logout']);
-
-    Route::get('users', [UserController::class, 'index']);
 
     // Create new galaxy
     Route::post('galaxy', [GalaxyController::class, 'store']);
@@ -55,23 +35,23 @@ Route::group(['middleware' => ['apiJwt']], function () {
 
 
     // Create new solar system
-    Route::post('solar_system', [SolarSystemController::class, 'store']);
+    Route::post('galaxies/{galaxyId}/solar-system', [SolarSystemController::class, 'store']);
 
     // List solar systems
-    Route::get('solar_systems', [SolarSystemController::class, 'index']);
+    Route::get('solar-systems', [SolarSystemController::class, 'index']);
 
     // List single solar system
-    Route::get('solar_system/{id}', [SolarSystemController::class, 'show']);
+    Route::get('solar-system/{id}', [SolarSystemController::class, 'show']);
 
     // Update solar system
-    Route::put('solar_system/{id}', [SolarSystemController::class, 'update']);
+    Route::put('solar-system/{id}', [SolarSystemController::class, 'update']);
 
     // Delete solar system
-    Route::delete('solar_system/{id}', [GalaxyController::class, 'destroy']);
+    Route::delete('solar-system/{id}', [SolarSystemController::class, 'destroy']);
 
 
     // Create new planet
-    Route::post('planet', [PlanetController::class, 'store']);
+    Route::post('solar-systems/{solarSystemId}/planet', [PlanetController::class, 'store']);
 
     // List planets
     Route::get('planets', [PlanetController::class, 'index']);
@@ -85,11 +65,5 @@ Route::group(['middleware' => ['apiJwt']], function () {
     // Delete planet
     Route::delete('planet/{id}', [PlanetController::class, 'destroy']);
 });
-
-
-   /* Route::get('/user/{id}', function ($id) {
-        return new UserResource(User::findOrFail($id));
-    });
-   */
 
 

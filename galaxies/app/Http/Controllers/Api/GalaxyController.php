@@ -3,11 +3,17 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Requests\StoreGalaxyRequest;
 use App\Http\Resources\GalaxyResource;
+use App\Http\Resources\SolarSystemResource;
 use App\Models\Galaxy;
+use App\Models\Planet;
+use App\Models\SolarSystem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class GalaxyController extends Controller
 {
@@ -29,14 +35,8 @@ class GalaxyController extends Controller
      */
     public function store(StoreGalaxyRequest $request)
     {
-        $galaxy = Galaxy::create([
-            "user_id" => $request->input('user_id'),
-            "name" => $request->input('name'),
-            "dimension" => $request->input('dimension'),
-            "number_of_solar_systems" => $request->input('number_of_solar_systems')
-        ]);
-        //return $this->response(, new GalaxyResource($galaxy));
-        return response('Galáxia criada com sucesso!')->json($galaxy);
+        $galaxy = Galaxy::create($request->all());
+        return response()->json(['status' => 'Galáxia criada com sucesso!', new GalaxyResource($galaxy)]);
     }
 
     /**
@@ -55,30 +55,41 @@ class GalaxyController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return GalaxyResource
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(StoreGalaxyRequest $request, $id)
     {
         $galaxy = Galaxy::findOrFail($request->id);
 
-        $galaxy->update([
-            'name' => $request->name,
-            'dimension' => $request->dimension,
-            'number_of_solar_systems' => $request->number_of_solar_systems
-        ]);
-        return $this->response('Informações sobre Galáxia atualizadas com sucesso!', new GalaxyResource($galaxy));
+        $galaxy->update($request->all());
+        return response()->json(['status' => 'Informações sobre Galáxia atualizadas com sucesso!', new GalaxyResource($galaxy)]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return GalaxyResource
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
     {
         $galaxy = Galaxy::findOrFail($id);
+        /*$solarSystems = SolarSystem::where('galaxy_id', (int)$id)->get();
+        $planets = DB::table('planets')
+            ->join('solar_systems', 'planets.solar_system_id', '=', 'solar_systems.id')
+            ->where('galaxy_id', '=', $id)
+            ->select('planets.*')
+            ->get();*/
+
         $galaxy->delete();
-        return $this->response('Galáxia excluída com sucesso!');
+
+        /*if(isset($solarSystems)) {
+            $solarSystems->delete();
+        }
+
+        if(isset($planets)) {
+            $planets->delete();
+        }*/
+        return response()->json(['status' => 'Galáxia excluída com sucesso!']);
     }
 }
