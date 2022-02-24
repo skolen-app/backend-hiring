@@ -16,7 +16,8 @@ class CreatePlanetsTable extends Migration
         Schema::create('planets', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('solar_system_id');
-            $table->foreign('solar_system_id')->references('id')->on('solar_systems');
+            $table->foreignId('solar_system_id')->constrained('solar_systems')
+                ->onDelete('cascade');
             $table->string('name');
             $table->bigInteger('dimension');
             $table->bigInteger('number_of_moons');

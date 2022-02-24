@@ -15,8 +15,8 @@ class CreateSolarSystemsTable extends Migration
     {
         Schema::create('solar_systems', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('galaxy_id');
-            $table->foreign('galaxy_id')->references('id')->on('galaxies');
+            $table->foreignId('galaxy_id')->constrained('galaxies')
+                ->onDelete('cascade');
             $table->string('name');
             $table->bigInteger('dimension');
             $table->bigInteger('number_of_planets');

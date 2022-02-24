@@ -4,16 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 
-use App\Http\Controllers\Api\AuthController;
+
 use App\Http\Requests\StoreGalaxyRequest;
 use App\Http\Resources\GalaxyResource;
-use App\Http\Resources\SolarSystemResource;
 use App\Models\Galaxy;
-use App\Models\Planet;
-use App\Models\SolarSystem;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+
 
 class GalaxyController extends Controller
 {
@@ -24,18 +20,23 @@ class GalaxyController extends Controller
      */
     public function index()
     {
-        return GalaxyResource::collection(Galaxy::all());
+        $userId = auth('api')->user()->getAuthIdentifier();
+        return GalaxyResource::collection(Galaxy::where('user_id', $userId)->get());
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function store(StoreGalaxyRequest $request)
     {
-        $galaxy = Galaxy::create($request->all());
+        $userId = auth('api')->user()->getAuthIdentifier();
+        $data = ($request->validated());
+        $data['user_id'] = $userId;
+        $galaxy = Galaxy::create($data);
         return response()->json(['status' => 'Galáxia criada com sucesso!', new GalaxyResource($galaxy)]);
     }
 
@@ -47,7 +48,20 @@ class GalaxyController extends Controller
      */
     public function show($id)
     {
-        return new GalaxyResource(Galaxy::FindOrFail($id));
+        $userId = auth('api')->user()->getAuthIdentifier();
+        $galaxyBelongsToUser = DB::table('users')
+            ->join('galaxies', 'galaxies.user_id', '=', 'users.id')
+            ->where('galaxies.user_id', '=', $userId)
+            ->where('galaxies.id', '=', $id)
+            ->where('galaxies.deleted_at', '=', null)
+            ->select('galaxies.*')
+            ->first();
+        if($galaxyBelongsToUser != null) {
+            return new GalaxyResource(Galaxy::FindOrFail($id));
+        }
+        else {
+            return response()->json(['status' => 'Busca não retornou resultados.']);
+        }
     }
 
     /**
@@ -59,10 +73,22 @@ class GalaxyController extends Controller
      */
     public function update(StoreGalaxyRequest $request, $id)
     {
-        $galaxy = Galaxy::findOrFail($request->id);
-
-        $galaxy->update($request->all());
-        return response()->json(['status' => 'Informações sobre Galáxia atualizadas com sucesso!', new GalaxyResource($galaxy)]);
+        $userId = auth('api')->user()->getAuthIdentifier();
+        $galaxyBelongsToUser = DB::table('users')
+            ->join('galaxies', 'galaxies.user_id', '=', 'users.id')
+            ->where('galaxies.user_id', '=', $userId)
+            ->where('galaxies.id', '=', $id)
+            ->where('galaxies.deleted_at', '=', null)
+            ->select('galaxies.*')
+            ->first();
+        if($galaxyBelongsToUser != null) {
+            $galaxy = Galaxy::findOrFail($id);
+            $galaxy->update($request->all());
+            return response()->json(['status' => 'Informações sobre Galáxia atualizadas com sucesso!', new GalaxyResource($galaxy)]);
+        }
+        else {
+            return response()->json(['status' => 'Não é possível autualizar as informações dessa Galáxia!']);
+        }
     }
 
     /**
@@ -73,23 +99,21 @@ class GalaxyController extends Controller
      */
     public function destroy($id)
     {
-        $galaxy = Galaxy::findOrFail($id);
-        /*$solarSystems = SolarSystem::where('galaxy_id', (int)$id)->get();
-        $planets = DB::table('planets')
-            ->join('solar_systems', 'planets.solar_system_id', '=', 'solar_systems.id')
-            ->where('galaxy_id', '=', $id)
-            ->select('planets.*')
-            ->get();*/
-
-        $galaxy->delete();
-
-        /*if(isset($solarSystems)) {
-            $solarSystems->delete();
+        $userId = auth('api')->user()->getAuthIdentifier();
+        $galaxyBelongsToUser = DB::table('users')
+            ->join('galaxies', 'galaxies.user_id', '=', 'users.id')
+            ->where('galaxies.user_id', '=', $userId)
+            ->where('galaxies.id', '=', $id)
+            ->where('galaxies.deleted_at', '=', null)
+            ->select('galaxies.*')
+            ->first();
+        if($galaxyBelongsToUser != null) {
+            $galaxy = Galaxy::findOrFail($id);
+            $galaxy->delete();
+            return response()->json(['status' => 'Galáxia excluída com sucesso!']);
         }
-
-        if(isset($planets)) {
-            $planets->delete();
-        }*/
-        return response()->json(['status' => 'Galáxia excluída com sucesso!']);
+        else {
+            return response()->json(['status' => 'Não é possível excluir essa Galáxia!']);
+        }
     }
 }
