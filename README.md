@@ -4,10 +4,10 @@
 ## REQUISITOS 
 ### Ferramentas e padronizações
 
-- utilize o framework Laravel na versãon 8 (https://laravel.com/docs/8.x/releases)
+- utilize o framework Laravel na versãon 10 (https://laravel.com/docs/10.x)
 - banco de dados postgres (https://www.postgresql.org/)
-- padronize a API com o padrão Restful (https://www.hostgator.com.br/blog/api-restful/) (https://laravel.com/docs/8.x/controllers#api-resource-routes)
-- validações de requisições são muito importantes, utilize o form validation do laravel (https://laravel.com/docs/8.x/validation#creating-form-requests)
+- padronize a API com o padrão Restful (https://www.hostgator.com.br/blog/api-restful/) (https://laravel.com/docs/10.x/controllers#api-resource-routes)
+- validações de requisições são muito importantes, utilize o form validation do laravel (https://laravel.com/docs/10.x/validation#creating-form-requests)
 - a padronização das responses é de extrema importancias para a qualidade de um projeto, utilize API Resource do laravel (https://laravel.com/docs/8.x/eloquent-resources)
 - utilize o software POSTMAN para testar as suas requisições e exporte a collection para dentro do projeto quando finalizar o desenvolvimento (https://www.postman.com/). Recomendo utilizar a versão de desktop do software.
 
