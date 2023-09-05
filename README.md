@@ -59,7 +59,7 @@
 }
  ```
 
-## Criação de Repositório e Compartilhamento com Gabriel
+## Criação de Repositório e Compartilhamento
 
 Por favor, crie um repositório para este projeto e compartilhe-o imediatamente com o endereço de e-mail gabrielkrysa@gmail.com. É fundamental o acesso para que possa ser avaliado as funcionalidades e o código. Certifique-se de conceder permissões completas para que seja possivel realizar uma avaliação abrangente.
 
